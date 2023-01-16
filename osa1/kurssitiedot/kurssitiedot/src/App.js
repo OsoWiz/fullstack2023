@@ -6,17 +6,31 @@ const Header = (props) => {
   );
 };
 
+const Part = (props) => {
+  return (
+    <p>
+      {props.part} {props.exercise}
+    </p>
+  );
+};
+
 const Content = (props) => {
-  console.log(props);
-  const list = props.exerciseList.map((exercise) => {
-    console.log(exercise[0]);
-    return (
-      <p>
-        {exercise[0]} {exercise[1]}
-      </p>
-    );
-  });
-  return list;
+  return (
+    <>
+      <Part
+        part={props.exerciseList[0][0]}
+        exercise={props.exerciseList[0][1]}
+      />
+      <Part
+        part={props.exerciseList[1][0]}
+        exercise={props.exerciseList[1][1]}
+      />
+      <Part
+        part={props.exerciseList[2][0]}
+        exercise={props.exerciseList[2][1]}
+      />
+    </>
+  );
 };
 
 const Total = (props) => {
