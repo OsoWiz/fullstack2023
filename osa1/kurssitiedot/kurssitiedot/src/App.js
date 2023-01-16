@@ -52,12 +52,12 @@ const App = () => {
     exercises: 14,
   };
 
-  const exercises = [part1, part2, part3];
+  const parts = [part1, part2, part3];
 
   return (
     <div>
       <Header course={course} />
-      <Content exerciseList={exercises} />
+      <Content exerciseList={parts} />
       <Total exercises={part1.exercises + part2.exercises + part3.exercises} />
     </div>
   );
