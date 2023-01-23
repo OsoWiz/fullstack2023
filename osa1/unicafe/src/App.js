@@ -28,6 +28,19 @@ function App() {
     setFeedback({ ...feedback, bad: feedback.bad + 1 });
   };
 
+  const totalFeedback = () => {
+    return feedback.good + feedback.neutral + feedback.bad;
+  };
+
+  const averageFeedback = () => {
+    return (feedback.good - feedback.bad) / totalFeedback();
+  };
+
+  // Tells how much of the feedback is positive on average
+  const averagePositive = () => {
+    return feedback.good / totalFeedback();
+  };
+
   return (
     <div>
       <SimpleHeader headerText={title} />
@@ -38,6 +51,9 @@ function App() {
       <p>good: {feedback.good}</p>
       <p>neutral: {feedback.neutral}</p>
       <p>bad: {feedback.bad}</p>
+      <p>total: {totalFeedback()}</p>
+      <p>average: {averageFeedback()}</p>
+      <p>positive: {(averagePositive() * 100).toFixed(1)}%</p>
     </div>
   );
 }
