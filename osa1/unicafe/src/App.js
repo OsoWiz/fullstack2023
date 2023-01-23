@@ -8,6 +8,20 @@ const Button = (props) => {
   return <button onClick={props.handleClick}>{props.text}</button>;
 };
 
+const Statistics = ({ feedback, total, average, averagePos }) => {
+  return (
+    <>
+      <SimpleHeader headerText="Statistics" />
+      <p>good: {feedback.good}</p>
+      <p>neutral: {feedback.neutral}</p>
+      <p>bad: {feedback.bad}</p>
+      <p>total: {total}</p>
+      <p>average: {average}</p>
+      <p>positive: {(averagePos * 100).toFixed(1)}%</p>
+    </>
+  );
+};
+
 function App() {
   const title = "Give feedback";
   const [feedback, setFeedback] = useState({
@@ -33,12 +47,21 @@ function App() {
   };
 
   const averageFeedback = () => {
-    return (feedback.good - feedback.bad) / totalFeedback();
+    const num = totalFeedback();
+    if (!num) {
+      return 0;
+    }
+
+    return (feedback.good - feedback.bad) / num;
   };
 
   // Tells how much of the feedback is positive on average
   const averagePositive = () => {
-    return feedback.good / totalFeedback();
+    const num = totalFeedback();
+    if (!num) {
+      return 0;
+    }
+    return feedback.good / num;
   };
 
   return (
@@ -47,13 +70,12 @@ function App() {
       <Button handleClick={giveGood()} text="good" />
       <Button handleClick={giveNeutral()} text="neutral" />
       <Button handleClick={giveBad()} text="bad" />
-      <SimpleHeader headerText="Statistics" />
-      <p>good: {feedback.good}</p>
-      <p>neutral: {feedback.neutral}</p>
-      <p>bad: {feedback.bad}</p>
-      <p>total: {totalFeedback()}</p>
-      <p>average: {averageFeedback()}</p>
-      <p>positive: {(averagePositive() * 100).toFixed(1)}%</p>
+      <Statistics
+        feedback={feedback}
+        total={totalFeedback()}
+        average={averageFeedback()}
+        averagePos={averagePositive()}
+      />
     </div>
   );
 }
