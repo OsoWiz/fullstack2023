@@ -8,6 +8,15 @@ const Button = (props) => {
   return <button onClick={props.handleClick}>{props.text}</button>;
 };
 
+const StatisticLine = ({ value, text }) => {
+  return (
+    <tr>
+      <td>{text}:</td>
+      <td>{value}</td>
+    </tr>
+  );
+};
+
 const Statistics = ({ feedback, total, average, averagePos }) => {
   if (!total) {
     return (
@@ -20,12 +29,19 @@ const Statistics = ({ feedback, total, average, averagePos }) => {
     return (
       <>
         <SimpleHeader headerText="Statistics" />
-        <p>good: {feedback.good}</p>
-        <p>neutral: {feedback.neutral}</p>
-        <p>bad: {feedback.bad}</p>
-        <p>total: {total}</p>
-        <p>average: {average}</p>
-        <p>positive: {(averagePos * 100).toFixed(1)}%</p>
+        <table>
+          <tbody>
+            <StatisticLine value={feedback.good} text="good" />
+            <StatisticLine value={feedback.neutral} text="neutral" />
+            <StatisticLine value={feedback.bad} text="bad" />
+            <StatisticLine value={total} text="total" />
+            <StatisticLine value={average} text="average" />
+            <StatisticLine
+              value={(averagePos * 100).toFixed(1) + "%"}
+              text="positive"
+            />
+          </tbody>
+        </table>
       </>
     );
   }
