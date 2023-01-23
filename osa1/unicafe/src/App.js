@@ -9,17 +9,26 @@ const Button = (props) => {
 };
 
 const Statistics = ({ feedback, total, average, averagePos }) => {
-  return (
-    <>
-      <SimpleHeader headerText="Statistics" />
-      <p>good: {feedback.good}</p>
-      <p>neutral: {feedback.neutral}</p>
-      <p>bad: {feedback.bad}</p>
-      <p>total: {total}</p>
-      <p>average: {average}</p>
-      <p>positive: {(averagePos * 100).toFixed(1)}%</p>
-    </>
-  );
+  if (!total) {
+    return (
+      <>
+        <SimpleHeader headerText="Statistics" />
+        <p>No feedback given</p>
+      </>
+    );
+  } else {
+    return (
+      <>
+        <SimpleHeader headerText="Statistics" />
+        <p>good: {feedback.good}</p>
+        <p>neutral: {feedback.neutral}</p>
+        <p>bad: {feedback.bad}</p>
+        <p>total: {total}</p>
+        <p>average: {average}</p>
+        <p>positive: {(averagePos * 100).toFixed(1)}%</p>
+      </>
+    );
+  }
 };
 
 function App() {
