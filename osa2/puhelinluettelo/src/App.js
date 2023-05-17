@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import NumberList from "./NumberList";
 import NumberForm from "./NumberForm";
 import SearchFilter from "./SearchFilter";
-import axios from "axios";
+import serviceObject from "./services";
 
 const App = () => {
   const [persons, setPersons] = useState([]);
@@ -11,9 +11,7 @@ const App = () => {
   const [searchTerm, setSearchTerm] = useState("");
 
   useEffect(() => {
-    axios.get("http://localhost:3001/persons").then((response) => {
-      setPersons(response.data);
-    });
+    serviceObject.getAll().then((initialPersons) => setPersons(initialPersons));
   }, []);
 
   const addPerson = (event) => {
@@ -23,7 +21,9 @@ const App = () => {
       return;
     }
     const nameObject = { name: newName, number: newNumber };
-    setPersons(persons.concat(nameObject));
+    serviceObject.create(nameObject).then((returnedPerson) => {
+      setPersons(persons.concat(returnedPerson));
+    });
     setNewName("");
     setNewNumber("");
   };
@@ -41,7 +41,17 @@ const App = () => {
         setNumber={setNewNumber}
         addPersonFunc={addPerson}
       />
-      <NumberList searchTerm={searchTerm} persons={persons} />
+      <NumberList
+        searchTerm={searchTerm}
+        persons={persons}
+        deleteFunc={(person) => {
+          if (window.confirm(`Delete ${person.name}?`)) {
+            serviceObject.deletePerson(person.id).then((returnedPerson) => {
+              setPersons(persons.filter((p) => p.id !== person.id));
+            });
+          }
+        }}
+      />
     </div>
   );
 };

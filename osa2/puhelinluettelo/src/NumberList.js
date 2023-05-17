@@ -1,4 +1,5 @@
-const NumberList = ({ searchTerm, persons }) => {
+const NumberList = ({ searchTerm, persons, deleteFunc }) => {
+  // console.log("NumberList", persons);
   return (
     <>
       <h2>Numbers</h2>
@@ -8,9 +9,12 @@ const NumberList = ({ searchTerm, persons }) => {
             person.name.toLowerCase().includes(searchTerm.toLowerCase())
           )
           .map((person) => (
-            <li key={person.name}>
-              {person.name}, {person.number}
-            </li>
+            <div key={person.id}>
+              <li>
+                {person.name}, {person.number}
+              </li>{" "}
+              <button onClick={() => deleteFunc(person)}>delete</button>
+            </div>
           ))}
       </ul>
     </>
