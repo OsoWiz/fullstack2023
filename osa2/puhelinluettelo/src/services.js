@@ -18,11 +18,21 @@ const deletePerson = (id) => {
   return axios.delete(`${url}/${id}`).then((response) => response.data);
 };
 
+const insert = (id, name, number) => {
+  return axios
+    .put(`${url}/${id}`, {
+      name: name,
+      number: number,
+    })
+    .then((response) => response.data);
+};
+
 const serviceObject = {
   getAll: getAll,
   create: create,
   update: update,
   deletePerson: deletePerson,
+  insert: insert,
 };
 
 export default serviceObject;
