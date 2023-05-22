@@ -19,7 +19,7 @@ function App() {
         type="text"
         onChange={(e) => setSearchTerm(e.target.value)}
       ></input>
-      <CountryList countries={countryList} />
+      <CountryList countries={countryList} setFunc={setCountryList} />
     </div>
   );
 }
