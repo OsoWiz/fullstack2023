@@ -1,0 +1,1 @@
+get https://studies.cs.helsinki.fi/restcountries/api/all
