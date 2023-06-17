@@ -22,8 +22,23 @@ const App = () => {
       setUsername("");
       setPassword("");
     } catch (exception) {
-      setErrorMessage("Wrong credentials");
+      setErrorMessage(`Wrong credentials: ${exception}`);
     }
+  };
+
+  const handleSignup = async (event) => {
+    event.preventDefault();
+    try {
+      const user = await loginService.signup({ username, password });
+      setErrorMessage(`New user ${user.username} signed up!`);
+    } catch (exception) {
+      setErrorMessage(`Invalid username or password: ${exception}`);
+    }
+  };
+
+  const refetchBlogs = async () => {
+    const blogs = await blogService.getAll();
+    setBlogs(blogs);
   };
 
   useEffect(() => {
@@ -52,6 +67,7 @@ const App = () => {
         <h2>Log in to application</h2>
         <LoginForm
           handleLogin={handleLogin}
+          handleSignup={handleSignup}
           username={username}
           password={password}
           setUsername={setUsername}
@@ -81,11 +97,13 @@ const App = () => {
         </div>
         <h2 style={{ marginTop: "1rem" }}>create new</h2>
         <BlogForm
+          user={user}
           blogList={blogs}
           setBlogList={setBlogs}
           setError={setErrorMessage}
+          fetchBlogs={refetchBlogs}
         />
-        <BlogList blogs={blogs} />
+        <BlogList blogs={blogs} user={user} setBlogs={setBlogs} />
       </div>
     );
   }
