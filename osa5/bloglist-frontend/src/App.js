@@ -16,7 +16,7 @@ const App = () => {
     event.preventDefault();
     try {
       const user = await loginService.login({ username, password });
-      console.log(user);
+      // console.log(user);
       window.localStorage.setItem("loggedBlogAppUser", JSON.stringify(user));
       setUser(user);
       setUsername("");
@@ -34,6 +34,16 @@ const App = () => {
     } catch (exception) {
       setErrorMessage(`Invalid username or password: ${exception}`);
     }
+  };
+
+  const addBlog = async (blog) => {
+    const newBlog = await blogService.create(blog);
+    if (!newBlog) {
+      setErrorMessage("Adding a new blog failed");
+      return;
+    }
+    setErrorMessage(`New blog ${newBlog.title} added`);
+    refetchBlogs();
   };
 
   const refetchBlogs = async () => {
@@ -96,13 +106,7 @@ const App = () => {
           </div>
         </div>
         <h2 style={{ marginTop: "1rem" }}>create new</h2>
-        <BlogForm
-          user={user}
-          blogList={blogs}
-          setBlogList={setBlogs}
-          setError={setErrorMessage}
-          fetchBlogs={refetchBlogs}
-        />
+        <BlogForm user={user} sendBlog={addBlog} />
         <BlogList blogs={blogs} user={user} setBlogs={setBlogs} />
       </div>
     );

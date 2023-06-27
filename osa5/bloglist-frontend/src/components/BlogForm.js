@@ -1,6 +1,6 @@
 import { useState } from "react";
-import blogService from "../services/blogs";
-const BlogForm = ({ user, blogList, setBlogList, setError, fetchBlogs }) => {
+
+const BlogForm = ({ user, sendBlog }) => {
   const [title, setTitle] = useState("");
   const [author, setAuthor] = useState("");
   const [url, setUrl] = useState("");
@@ -13,15 +13,8 @@ const BlogForm = ({ user, blogList, setBlogList, setError, fetchBlogs }) => {
       author: author,
       url: url,
     };
-    const newBlog = await blogService.create(blogToBeCreated);
-    if (!newBlog) {
-      setError("Adding a new blog failed");
-      return;
-    }
-    setBlogList(blogList.concat(newBlog));
-    setError(`New blog ${newBlog.title} added`);
+    await sendBlog(blogToBeCreated);
     setShowForm(false); // hide the form after posting
-    fetchBlogs();
   };
 
   if (user === null) {
@@ -46,7 +39,7 @@ const BlogForm = ({ user, blogList, setBlogList, setError, fetchBlogs }) => {
             />
           </div>
           <div>
-            author :
+            author:
             <input
               type="text"
               value={author}
@@ -55,7 +48,7 @@ const BlogForm = ({ user, blogList, setBlogList, setError, fetchBlogs }) => {
             />
           </div>
           <div>
-            url :
+            url:
             <input
               type="text"
               value={url}

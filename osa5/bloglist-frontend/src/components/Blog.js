@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
-import blogService from "../services/blogs";
-const Blog = ({ blog, user, removeBlog }) => {
+const Blog = ({ blog, user, likeBlog, removeBlog }) => {
   const [showInfo, setShowInfo] = useState(false);
   const [likes, setLikes] = useState(blog.likes);
   const blogStyle = {
@@ -19,7 +18,7 @@ const Blog = ({ blog, user, removeBlog }) => {
   const like = async (event) => {
     event.preventDefault();
     blog.likes += 1;
-    await blogService.like(blog);
+    await likeBlog(blog);
     setLikes(blog.likes);
   };
 
