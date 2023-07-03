@@ -10,6 +10,8 @@ const BlogList = ({ blogs, user, setBlogs }) => {
 
   const likeBlog = async (blog) => {
     await blogService.like(blog);
+    const newBlogs = blogs.map((b) => (b.id === blog.id ? blog : b));
+    setBlogs(newBlogs);
   };
 
   return (
