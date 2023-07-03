@@ -56,7 +56,9 @@ const BlogForm = ({ user, sendBlog }) => {
               onChange={(e) => setUrl(e.target.value)}
             />
           </div>
-          <button type="submit">create</button>
+          <button type="submit" name="Createblog">
+            create
+          </button>
         </form>
         <button onClick={() => setShowForm(false)}>cancel</button>
       </div>
