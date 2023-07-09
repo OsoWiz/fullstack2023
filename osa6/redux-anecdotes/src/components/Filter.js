@@ -7,7 +7,7 @@ const Filter = () => {
   const handleChange = (event) => {
     // input-kentän arvo muuttujassa event.target.value
     const filter = event.target.value;
-    console.log(`Filter: ${filter}`);
+    //console.log(`Filter: ${filter}`);
     dispatch(setFilter(filter));
   };
   const style = {
